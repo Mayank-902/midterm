@@ -1,10 +1,10 @@
 pipeline {
     agent any
- 
+    
     environment {
         DOCKER_IMAGE = 'maven:3.8.1-jdk-11'
     }
- 
+    
     stages {
         stage('Build') {
             steps {
@@ -13,16 +13,16 @@ pipeline {
                     docker.image(DOCKER_IMAGE).pull()
                     
                     // Run Maven build inside Docker container
-                    docker.image(DOCKER_IMAGE).inside {
+                    docker.image(DOCKER_IMAGE).inside('-v /root/.m2:/root/.m2') {
                         bat 'mvn clean install'
                     }
                 }
             }
         }
- 
+        
         // Add other stages as needed (e.g., test, deploy)
     }
- 
+    
     post {
         success {
             echo 'Build and tests passed. Ready for deployment.'
