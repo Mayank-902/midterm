@@ -3,10 +3,15 @@ pipeline {
     
     environment {
         DOCKER_IMAGE = 'maven:3.8.1-jdk-11'
-        WORKSPACE_DIR = PWD()   // Use PWD() to get the current workspace directory
     }
     
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
@@ -14,14 +19,12 @@ pipeline {
                     docker.image(DOCKER_IMAGE).pull()
                     
                     // Run Maven build inside Docker container
-                    docker.image(DOCKER_IMAGE).inside("-v /root/.m2:/root/.m2 -w ${WORKSPACE_DIR}") {
+                    docker.image(DOCKER_IMAGE).inside("-v /root/.m2:/root/.m2 -w %WORKSPACE%") {
                         bat 'mvn clean install'
                     }
                 }
             }
         }
-        
-        // Add other stages as needed (e.g., test, deploy)
     }
     
     post {
