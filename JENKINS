@@ -2,8 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3.8.1-jdk-11'
-            // Set the working directory inside the Docker container
-            args '-v C:/ProgramData/Jenkins/.jenkins/workspace/docker_maven_try/:/workspace -w /workspace'
+            args '-v C:/ProgramData/Jenkins/.jenkins/workspace/docker_maven_try:/workspace -w /workspace'
         }
     }
     environment {
