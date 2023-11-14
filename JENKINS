@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3.8.1-jdk-11'
-            args '-v C:/ProgramData/Jenkins/.jenkins/workspace/docker_maven_try:/workspace -w /workspace'
+            args '-v C:/ProgramData/Jenkins/.m2:/root/.m2 -v %WORKSPACE%:/workspace -w /workspace'
         }
     }
     environment {
@@ -23,4 +23,5 @@ pipeline {
         }
     }
 }
+
 
