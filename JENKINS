@@ -1,18 +1,22 @@
 pipeline {
     agent any
+    
     environment {
-        PATH = "C:/Maven/apache-maven-3.9.5/bin$PATH"
-        // Add other environment variables as needed
+        // Set the JAVA_HOME variable to the path where Java is installed on your machine
+        JAVA_HOME = 'C:\Java\jdk-17.0.5'
     }
+
     stages {
         stage('Checkout') {
             steps {
+                // Your existing checkout steps
                 checkout scm
             }
         }
         stage('Build') {
             steps {
-                bat "C:\\Windows\\System32\\cmd.exe /c mvn clean install"
+                // Your existing build steps
+                bat '"C:/Maven/apache-maven-3.9.5/bin$PATH/mvn clean install"'
             }
         }
     }
