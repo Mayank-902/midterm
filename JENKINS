@@ -1,23 +1,23 @@
 pipeline {
-    agent any
-    
-    environment {
-        // Set the JAVA_HOME variable to the path where Java is installed on your machine
-        PATH = "C:/Maven/apache-maven-3.9.5/bin$PATH"
-        JAVA_HOME = "C:/Java/jdk-17.0.5"
+    agent {
+        docker {
+            image 'maven:3.8.1-jdk-11'
+        }
     }
-
+    environment {
+        PATH = "C:/Maven/apache-maven-3.9.5/bin$PATH"
+	    JAVA_HOME = "C:/Java/jdk-17.0.5"
+        // Add other environment variables as needed
+    }
     stages {
         stage('Checkout') {
             steps {
-                // Your existing checkout steps
                 checkout scm
             }
         }
         stage('Build') {
             steps {
-                // Your existing build steps
-                 bat "C:\\Windows\\System32\\cmd.exe /c mvn clean install"
+                bat "C:\\Windows\\System32\\cmd.exe /c mvn clean install"
             }
         }
     }
